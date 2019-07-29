@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration scan="true">
+<configuration scan="true" scanPeriod="15 seconds">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <logger name="org.apache" level="WARN"/>
@@ -29,7 +29,7 @@
         </sift>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE-USER"/>
     </root>

@@ -14,8 +14,13 @@ public class LoggingService {
     private static final String USERNAME = "username";
 
     @Scheduled(fixedDelay = 1000)
-    public void debugLoggin1() {
-        logger.debug("I'm debug logger");
+    public void debugLogging() {
+        logger.debug("I'm DEBUG logger");
+    }
+
+    @Scheduled(fixedDelay = 1000)
+    public void infoLogging() {
+        logger.info("I'm INFO logger");
     }
 
 
