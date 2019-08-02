@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration scan="true" scanPeriod="15 seconds">
+<configuration scan="true" scanPeriod="5 seconds">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <logger name="org.apache" level="WARN"/>
 
-    <appender name="FILE-USER" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>username</key>
-            <defaultValue>nouser</defaultValue>
-        </discriminator>
 
-        <sift>
-            <appender name="FILE-${username}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>logs/${username}.log</file>
-                <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-                    <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %level %logger{35} - %msg%n</Pattern>
-                </encoder>
-                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <FileNamePattern>logs/${username}.%i.log.zip</FileNamePattern>
-                    <MinIndex>1</MinIndex>
-                    <MaxIndex>10</MaxIndex>
-                </rollingPolicy>
-                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                    <MaxFileSize>10MB</MaxFileSize>
-                </triggeringPolicy>
-            </appender>
-        </sift>
-    </appender>
+    <springProfile name="prod">
+        <appender name="FILE-USER" class="ch.qos.logback.classic.sift.SiftingAppender">
+            <discriminator>
+                <key>username</key>
+                <defaultValue>nouser</defaultValue>
+            </discriminator>
 
-    <root level="info">
+            <sift>
+                <appender name="FILE-${username}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                    <file>logs/${username}.log</file>
+                    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                        <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %level %logger{35} - %msg%n</Pattern>
+                    </encoder>
+                    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                        <FileNamePattern>logs/${username}.%i.log.zip</FileNamePattern>
+                        <MinIndex>1</MinIndex>
+                        <MaxIndex>10</MaxIndex>
+                    </rollingPolicy>
+                    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                        <MaxFileSize>10MB</MaxFileSize>
+                    </triggeringPolicy>
+                </appender>
+            </sift>
+        </appender>
+    </springProfile>
+
+
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE-USER"/>
     </root>
 
 </configuration>
-
-
-<!--<springProfile name="prod">-->
-<!--<property name="CONSOLE_LOG_PATTERN" value="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
